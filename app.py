@@ -7,34 +7,75 @@ st.set_page_config(
     layout="wide",
 )
 
-NAVY = "#1F3864"
+NAVY = "#0B1F4F"
+BLUE = "#1F5FE0"
+LIGHT = "#8DB0F2"
+MINT = "#5BE38E"
+PALE = "#EEF4FE"
+
 st.markdown(
     f"""
     <style>
-    h1, h2, h3 {{ color: {NAVY}; }}
-    .block-container {{ max-width: 1100px; padding-top: 2rem; }}
-    .lead {{ font-size: 1.1rem; line-height: 1.6; }}
-    .quote {{ border-left: 4px solid {NAVY}; padding: 0.6rem 1rem; background: rgba(31,56,100,0.06); border-radius: 4px; }}
+    .block-container {{ max-width: 1150px; padding-top: 1.2rem; }}
+    h1, h2, h3, h4 {{ color: {NAVY}; }}
+    p, li {{ line-height: 1.6; }}
+    .banner {{
+        background: linear-gradient(120deg, {NAVY} 0%, {BLUE} 70%, {LIGHT} 100%);
+        color: white; border-radius: 14px; padding: 2rem 2.2rem 1.6rem 2.2rem; margin-bottom: 1.2rem;
+        border-bottom: 6px solid {MINT};
+    }}
+    .banner .tag {{ display:inline-block; background:{MINT}; color:{NAVY}; font-weight:700; font-size:0.8rem;
+        letter-spacing:0.06em; text-transform:uppercase; padding:0.25rem 0.7rem; border-radius:999px; }}
+    .banner h1 {{ color: white; font-size: 2.1rem; margin: 0.6rem 0 0.4rem 0; line-height:1.2; }}
+    .banner .sub {{ color: #E3ECFD; font-size: 1.05rem; margin: 0; }}
+    .banner .by {{ color: white; margin-top: 1rem; font-size: 0.95rem; }}
+    .banner a {{ color: {MINT}; text-decoration: none; font-weight: 600; }}
+    .kpis {{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin: 0.2rem 0 1.4rem 0; }}
+    .kpi {{ background:{PALE}; border-radius:12px; padding:1rem 1.1rem; border-left:6px solid {BLUE}; }}
+    .kpi .v {{ font-size:1.8rem; font-weight:800; color:{NAVY}; }}
+    .kpi .l {{ font-size:0.85rem; color:#38507F; }}
+    .lead {{ font-size: 1.1rem; }}
+    .quote {{ border-left: 5px solid {MINT}; padding: 0.8rem 1.1rem; background: {PALE}; border-radius: 6px; color:{NAVY}; }}
+    .card {{ background:white; border:1px solid #D9E4FB; border-top:5px solid {BLUE}; border-radius:12px;
+        padding:1rem 1.1rem; height:100%; }}
+    .card h4 {{ margin:0 0 0.4rem 0; }}
+    .stTabs [data-baseweb="tab-list"] {{ gap: 0.3rem; flex-wrap: wrap; }}
+    .stTabs [data-baseweb="tab"] {{ background:{PALE}; border-radius:8px 8px 0 0; padding:0.5rem 0.9rem; color:{NAVY}; font-weight:600; }}
+    .stTabs [aria-selected="true"] {{ background:{NAVY} !important; color:white !important; }}
+    .stTabs [data-baseweb="tab-highlight"] {{ background:{MINT}; }}
+    .footer {{ text-align:center; color:#5A6E96; font-size:0.85rem; margin-top:1.5rem; }}
+    @media (max-width: 800px) {{ .kpis {{ grid-template-columns: repeat(2, 1fr); }} .banner h1 {{ font-size:1.6rem; }} }}
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# ---------------------------------------------------------------- header
-st.title("Hiring a Senior Media Buyer for AIOS's European Blitzscale")
+
+def card(title, body):
+    st.markdown(f'<div class="card"><h4>{title}</h4><div>{body}</div></div>', unsafe_allow_html=True)
+
+
+# ---------------------------------------------------------------- banner
 st.markdown(
-    "**A 30-day search plan by Adam Baig** · Talent Lead, Full-Cycle Recruiter & Outbound Headhunter · "
-    "[LinkedIn](https://www.linkedin.com/in/adambaiguk) · "
-    "[GitHub](https://github.com/SkynetAI-Labs) · [GitLab](https://gitlab.com/SkynetAI-Labs)"
+    """
+    <div class="banner">
+      <span class="tag">Prepared for the AIOS Talent Team</span>
+      <h1>Hiring a Senior Media Buyer for AIOS's European Blitzscale</h1>
+      <p class="sub">A 30-day search plan, and how I would run it alongside three other live searches</p>
+      <p class="by"><b>Adam Baig</b> · Talent Lead, Full-Cycle Recruiter &amp; Outbound Headhunter ·
+        <a href="https://www.linkedin.com/in/adambaiguk" target="_blank">LinkedIn</a> ·
+        <a href="https://github.com/SkynetAI-Labs" target="_blank">GitHub</a> ·
+        <a href="https://gitlab.com/SkynetAI-Labs" target="_blank">GitLab</a></p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="v">30 days</div><div class="l">Target time-to-fill</div></div>
+      <div class="kpi"><div class="v">&ge; 70%</div><div class="l">Outbound share of pipeline</div></div>
+      <div class="kpi"><div class="v">&ge; 90%</div><div class="l">Offer-accept rate</div></div>
+      <div class="kpi"><div class="v">Same day</div><div class="l">Ashby pipeline hygiene</div></div>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
-
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Target time-to-fill", "30 days")
-c2.metric("Outbound share of pipeline", "≥ 70%")
-c3.metric("Offer-accept target", "≥ 90%")
-c4.metric("Ashby hygiene", "Same-day")
-
-st.divider()
 
 tabs = st.tabs([
     "1. Why it matters",
@@ -45,6 +86,7 @@ tabs = st.tabs([
     "6. Screening",
     "7. Closing",
     "8. KPIs & Europe",
+    "9. Four searches at once",
 ])
 
 # ---------------------------------------------------------------- 1
@@ -58,11 +100,10 @@ with tabs[0]:
     )
     a, b = st.columns(2)
     with a:
-        st.subheader("Step 1 → $1B ARR by end of 2026")
-        st.write("UK growth from 3k to 200k active GLP-1 patients needs paid acquisition that scales without wasting spend.")
+        card("Step 1 → $1B ARR by end of 2026", "UK growth from 3k to 200k active GLP-1 patients needs paid acquisition that scales without wasting spend.")
     with b:
-        st.subheader("Step 2 → $10B ARR by end of 2028")
-        st.write("Blitzscaling Europe means opening new markets one after another, and each one needs local media buying expertise from day one.")
+        card("Step 2 → $10B ARR by end of 2028", "Blitzscaling Europe means opening new markets one after another, and each one needs local media buying expertise from day one.")
+    st.write("")
     st.markdown(
         '<div class="quote">The goal, in AIOS\'s own words: make sure <b>"a lack of key hires never blocks growth"</b>.</div>',
         unsafe_allow_html=True,
@@ -143,14 +184,12 @@ with tabs[3]:
     )
     l1, l2, l3 = st.columns(3)
     with l1:
-        st.subheader("1. X-ray & Recruiter")
-        st.write("Google X-ray to reach profiles beyond my network, then LinkedIn Recruiter to filter by company, tenure and location.")
+        card("1. X-ray & Recruiter", "Google X-ray to reach profiles beyond my network, then LinkedIn Recruiter to filter by company, tenure and location.")
     with l2:
-        st.subheader("2. Company mapping")
-        st.write("Map each target company's growth team, identify the number two behind each head of paid media, and approach them directly.")
+        card("2. Company mapping", "Map each target company's growth team, identify the number two behind each head of paid media, and approach them directly.")
     with l3:
-        st.subheader("3. Referrals")
-        st.write("Ask every strong candidate, including those who decline, for the best buyer they have worked with. Use paid-media communities and AIOS's own growth team for warm introductions.")
+        card("3. Referrals", "Ask every strong candidate, including those who decline, for the best buyer they have worked with. Use paid-media communities and AIOS's own growth team for warm introductions.")
+    st.write("")
     st.subheader("Example X-ray string (UK)")
     st.code(
         'site:linkedin.com/in ("media buyer" OR "paid social" OR "performance marketing" OR "paid acquisition") '
@@ -211,9 +250,13 @@ with tabs[6]:
         "This approach has given me around a 90% offer-accept rate across my career."
     )
     w1, w2, w3 = st.columns(3)
-    w1.markdown("**Who**\n\nThe number two in a strong growth team, or a senior buyer at a smaller brand, ready to own spend at a company growing faster than their current one.")
-    w2.markdown("**Why they say yes**\n\nThe move is a real step up in scope, title, pay and equity, so the offer is not a close call against their current role.")
-    w3.markdown("**Why they perform**\n\nThey are hungry to prove themselves at the higher level, and bring recent, hands-on platform skills.")
+    with w1:
+        card("Who", "The number two in a strong growth team, or a senior buyer at a smaller brand, ready to own spend at a company growing faster than their current one.")
+    with w2:
+        card("Why they say yes", "The move is a real step up in scope, title, pay and equity, so the offer is not a close call against their current role.")
+    with w3:
+        card("Why they perform", "They are hungry to prove themselves at the higher level, and bring recent, hands-on platform skills.")
+    st.write("")
     st.write(
         "Closing starts at the first call: I ask about pay, notice period, other processes and what would make them say yes. "
         "Before the offer, I pre-close the candidate on the numbers and timing, so there are no surprises. "
@@ -244,7 +287,9 @@ with tabs[7]:
     ]
     cols = st.columns(4)
     for col, (wk, desc) in zip(cols, weeks):
-        col.markdown(f"**{wk}**\n\n{desc}")
+        with col:
+            card(wk, desc)
+    st.write("")
 
     st.subheader("Repeating it for Step 2")
     st.write(
@@ -253,5 +298,53 @@ with tabs[7]:
         "warm bench of buyers so the next market never waits for a hire."
     )
 
-st.divider()
-st.caption("Prepared by Adam Baig · London, UK (fully remote) · Based on the public AIOS Talent Lead job description.")
+# ---------------------------------------------------------------- 9
+with tabs[8]:
+    st.header("Running this alongside three other searches")
+    st.write(
+        "A Talent Lead at AIOS never runs one search at a time. Here is how I would carry the Senior Media Buyer search "
+        "alongside three other live searches across growth, clinical, product and technical roles, without letting "
+        "quality, candidate communication or Ashby hygiene slip."
+    )
+    searches = pd.DataFrame(
+        [
+            ["Senior Media Buyer", "Growth", "1",
+             "Drives patient acquisition in the UK and each new European market",
+             "UK online health and DTC subscription brands; X-ray plus company mapping", "35%"],
+            ["Clinical Pharmacist (Independent Prescriber)", "Clinical", "1",
+             "Prescribing capacity sets how many patients can be safely treated each day",
+             "GPhC-registered independent prescribers in online pharmacy and primary care; pharmacist networks and referrals; partner with AIOS's Clinical Recruiter", "25%"],
+            ["Head of InfoSec", "Technical", "2",
+             "Protects patient health data and supports regulatory approval in each new market",
+             "Security leaders at UK fintech and health tech scale-ups; ISO 27001 and UK GDPR experience; assessed with my hands-on cloud security background", "25%"],
+            ["Product Manager – Engagement", "Product", "3",
+             "Keeps patients engaged and on treatment, which drives retention and revenue",
+             "Consumer subscription and health app product teams; builder pattern and experiment track record", "15%"],
+        ],
+        columns=["Search", "Area", "Priority", "Why it matters to the plan", "Sourcing approach", "Share of my week"],
+    )
+    st.dataframe(searches, hide_index=True, use_container_width=True)
+    st.caption("Priority is set by business impact on Steps 1 and 2 and agreed with the Head of Talent each week.")
+
+    st.subheader("A typical week across four searches")
+    d1, d2, d3 = st.columns(3)
+    with d1:
+        card("Mornings (UK and Europe)", "Outbound sourcing and outreach while UK and European candidates are online. Every search gets new profiles each day, highest priority first.")
+    with d2:
+        card("Afternoons", "Recruiter screens, interview coordination, references and closing conversations, with scorecard notes written up straight away.")
+    with d3:
+        card("Late afternoon to 8pm UK (to midday Pacific)", "Async updates and live syncs with hiring managers across time zones; pipeline reviews and calibration questions raised early.")
+    st.write("")
+
+    st.subheader("How nothing stalls")
+    st.markdown(
+        "- **Daily:** every stage and candidate status updated in Ashby the same day, and every candidate who has spoken to me hears back within 48 hours.\n"
+        "- **Weekly:** a one-page update per search covering pipeline by stage, outbound share, risks and the next actions, shared async before each hiring manager sync.\n"
+        "- **Early warning:** if a search has no strong calibrated profiles by day 10, I change the target list or the search strings, and flag it rather than waiting.\n"
+        "- **Reusable playbooks:** each finished search leaves behind a scorecard, target map and outreach template, so the next hire in a new European market starts faster."
+    )
+
+st.markdown(
+    '<div class="footer">Prepared by Adam Baig · London, UK (fully remote) · Based on the public AIOS Talent Lead job description and AIOS careers page.</div>',
+    unsafe_allow_html=True,
+)
