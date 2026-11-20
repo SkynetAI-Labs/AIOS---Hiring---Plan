@@ -16,39 +16,60 @@ PALE = "#EEF4FE"
 st.markdown(
     f"""
     <style>
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {{ background: #FFFFFF !important; }}
+    [data-testid="stHeader"] {{ background: rgba(255,255,255,0.0) !important; }}
+    .stApp p, .stApp li, .stApp span, .stApp label, .stApp td, .stApp th,
+    .stApp [data-testid="stMarkdownContainer"], .stApp [data-testid="stCaptionContainer"] {{ color: #1A2B4C !important; }}
+    .stApp h1, .stApp h2, .stApp h3, .stApp h4 {{ color: {NAVY} !important; }}
     .block-container {{ max-width: 1150px; padding-top: 1.2rem; }}
-    h1, h2, h3, h4 {{ color: {NAVY}; }}
     p, li {{ line-height: 1.6; }}
+    table.t {{ width:100%; border-collapse:collapse; margin:0.4rem 0 1rem 0; font-size:0.95rem; background:#FFFFFF; }}
+    table.t th {{ background:{NAVY} !important; color:#FFFFFF !important; text-align:left; padding:0.6rem 0.7rem; }}
+    table.t td {{ border-bottom:1px solid #D9E4FB; padding:0.6rem 0.7rem; vertical-align:top; }}
+    table.t tr:nth-child(even) td {{ background:{PALE}; }}
+    .note {{ background:{PALE}; border-left:5px solid {BLUE}; padding:0.8rem 1.1rem; border-radius:6px; margin:0.6rem 0; }}
+    .good {{ background:#E9FBF0; border-left:5px solid {MINT}; padding:0.8rem 1.1rem; border-radius:6px; margin:0.6rem 0; }}
     .banner {{
         background: linear-gradient(120deg, {NAVY} 0%, {BLUE} 70%, {LIGHT} 100%);
         color: white; border-radius: 14px; padding: 2rem 2.2rem 1.6rem 2.2rem; margin-bottom: 1.2rem;
         border-bottom: 6px solid {MINT};
     }}
-    .banner .tag {{ display:inline-block; background:{MINT}; color:{NAVY}; font-weight:700; font-size:0.8rem;
+    .banner .tag {{ display:inline-block; background:{MINT}; color:{NAVY} !important; font-weight:700; font-size:0.8rem;
         letter-spacing:0.06em; text-transform:uppercase; padding:0.25rem 0.7rem; border-radius:999px; }}
-    .banner h1 {{ color: white; font-size: 2.1rem; margin: 0.6rem 0 0.4rem 0; line-height:1.2; }}
-    .banner .sub {{ color: #E3ECFD; font-size: 1.05rem; margin: 0; }}
-    .banner .by {{ color: white; margin-top: 1rem; font-size: 0.95rem; }}
-    .banner a {{ color: {MINT}; text-decoration: none; font-weight: 600; }}
+    .banner h1 {{ color: white !important; font-size: 2.1rem; margin: 0.6rem 0 0.4rem 0; line-height:1.2; }}
+    .banner .sub {{ color: #E3ECFD !important; font-size: 1.05rem; margin: 0; }}
+    .banner .by, .banner .by b {{ color: white !important; margin-top: 1rem; font-size: 0.95rem; }}
+    .banner a {{ color: {MINT} !important; text-decoration: none; font-weight: 600; }}
     .kpis {{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin: 0.2rem 0 1.4rem 0; }}
     .kpi {{ background:{PALE}; border-radius:12px; padding:1rem 1.1rem; border-left:6px solid {BLUE}; }}
-    .kpi .v {{ font-size:1.8rem; font-weight:800; color:{NAVY}; }}
-    .kpi .l {{ font-size:0.85rem; color:#38507F; }}
+    .kpi .v {{ font-size:1.8rem; font-weight:800; color:{NAVY} !important; }}
+    .kpi .l {{ font-size:0.85rem; color:#38507F !important; }}
     .lead {{ font-size: 1.1rem; }}
     .quote {{ border-left: 5px solid {MINT}; padding: 0.8rem 1.1rem; background: {PALE}; border-radius: 6px; color:{NAVY}; }}
     .card {{ background:white; border:1px solid #D9E4FB; border-top:5px solid {BLUE}; border-radius:12px;
         padding:1rem 1.1rem; height:100%; }}
     .card h4 {{ margin:0 0 0.4rem 0; }}
     .stTabs [data-baseweb="tab-list"] {{ gap: 0.3rem; flex-wrap: wrap; }}
-    .stTabs [data-baseweb="tab"] {{ background:{PALE}; border-radius:8px 8px 0 0; padding:0.5rem 0.9rem; color:{NAVY}; font-weight:600; }}
-    .stTabs [aria-selected="true"] {{ background:{NAVY} !important; color:white !important; }}
+    .stTabs [data-baseweb="tab"] {{ background:{PALE}; border-radius:8px 8px 0 0; padding:0.5rem 0.9rem; color:{NAVY} !important; font-weight:600; }}
+    .stTabs [aria-selected="true"] {{ background:{NAVY} !important; }}
+    .stTabs [aria-selected="true"] p {{ color:white !important; }}
     .stTabs [data-baseweb="tab-highlight"] {{ background:{MINT}; }}
-    .footer {{ text-align:center; color:#5A6E96; font-size:0.85rem; margin-top:1.5rem; }}
+    .footer {{ text-align:center; color:#5A6E96 !important; font-size:0.85rem; margin-top:1.5rem; }}
     @media (max-width: 800px) {{ .kpis {{ grid-template-columns: repeat(2, 1fr); }} .banner h1 {{ font-size:1.6rem; }} }}
     </style>
     """,
     unsafe_allow_html=True,
 )
+
+
+def table(df):
+    head = "".join(f"<th>{c}</th>" for c in df.columns)
+    rows = "".join("<tr>" + "".join(f"<td>{v}</td>" for v in r) + "</tr>" for r in df.values.tolist())
+    st.markdown(f'<table class="t"><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>', unsafe_allow_html=True)
+
+
+def note(text, kind="note"):
+    st.markdown(f'<div class="{kind}">{text}</div>', unsafe_allow_html=True)
 
 
 def card(title, body):
@@ -137,7 +158,7 @@ with tabs[1]:
         ],
         columns=["Hiring bar", "What great looks like", "How I test it"],
     )
-    st.dataframe(scorecard, hide_index=True, use_container_width=True)
+    table(scorecard)
     st.subheader("Compliance is a must-have, not a nice-to-have")
     st.write(
         "UK rules ban advertising prescription-only medicines to the public, and the ASA has been actively enforcing "
@@ -172,8 +193,8 @@ with tabs[2]:
         ],
         columns=["Tier", "Where to look", "Why they fit"],
     )
-    st.dataframe(tiers, hide_index=True, use_container_width=True)
-    st.info("Before approaching tier 1, I would confirm with the Head of Talent and Legal any no-approach rules or partner sensitivities.")
+    table(tiers)
+    note("Before approaching tier 1, I would confirm with the Head of Talent and Legal any no-approach rules or partner sensitivities.")
 
 # ---------------------------------------------------------------- 4
 with tabs[3]:
@@ -237,10 +258,10 @@ with tabs[5]:
     ]
     for i, (name, desc) in enumerate(stages, 1):
         st.markdown(f"**{i}. {name}** — {desc}")
-    st.success(
+    note(
         "After each stage, every candidate is marked advance, hold or decline against the scorecard, with one written line "
         "saying why. All stages and statuses are kept current in Ashby the same day, so nothing stalls."
-    )
+    , kind="good")
 
 # ---------------------------------------------------------------- 7
 with tabs[6]:
@@ -276,7 +297,7 @@ with tabs[7]:
         ],
         columns=["AIOS KPI", "Target for this search", "My track record"],
     )
-    st.dataframe(kpis, hide_index=True, use_container_width=True)
+    table(kpis)
 
     st.subheader("30-day plan")
     weeks = [
@@ -323,7 +344,7 @@ with tabs[8]:
         ],
         columns=["Search", "Area", "Priority", "Why it matters to the plan", "Sourcing approach", "Share of my week"],
     )
-    st.dataframe(searches, hide_index=True, use_container_width=True)
+    table(searches)
     st.caption("Priority is set by business impact on Steps 1 and 2 and agreed with the Head of Talent each week.")
 
     st.subheader("A typical week across four searches")
