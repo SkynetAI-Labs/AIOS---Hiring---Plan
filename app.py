@@ -1,9 +1,11 @@
+from html import escape
+
 import pandas as pd
 import streamlit as st
 
 st.set_page_config(
     page_title="AIOS Hiring Plan | Senior Media Buyer | Adam Baig",
-    page_icon="🎯",
+    page_icon="✦",
     layout="wide",
 )
 
@@ -13,59 +15,68 @@ LIGHT = "#8DB0F2"
 MINT = "#5BE38E"
 PALE = "#EEF4FE"
 
-st.markdown(
-    f"""
+st.markdown("""
     <style>
-    .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {{ background: #FFFFFF !important; }}
-    [data-testid="stHeader"] {{ background: rgba(255,255,255,0.0) !important; }}
-    .stApp p, .stApp li, .stApp span, .stApp label, .stApp td, .stApp th,
-    .stApp [data-testid="stMarkdownContainer"], .stApp [data-testid="stCaptionContainer"] {{ color: #1A2B4C !important; }}
-    .stApp h1, .stApp h2, .stApp h3, .stApp h4 {{ color: {NAVY} !important; }}
-    .block-container {{ max-width: 1150px; padding-top: 1.2rem; }}
-    p, li {{ line-height: 1.6; }}
-    table.t {{ width:100%; border-collapse:collapse; margin:0.4rem 0 1rem 0; font-size:0.95rem; background:#FFFFFF; }}
-    table.t th {{ background:{NAVY} !important; color:#FFFFFF !important; text-align:left; padding:0.6rem 0.7rem; }}
-    table.t td {{ border-bottom:1px solid #D9E4FB; padding:0.6rem 0.7rem; vertical-align:top; }}
-    table.t tr:nth-child(even) td {{ background:{PALE}; }}
-    .note {{ background:{PALE}; border-left:5px solid {BLUE}; padding:0.8rem 1.1rem; border-radius:6px; margin:0.6rem 0; }}
-    .good {{ background:#E9FBF0; border-left:5px solid {MINT}; padding:0.8rem 1.1rem; border-radius:6px; margin:0.6rem 0; }}
-    .banner {{
-        background: linear-gradient(120deg, {NAVY} 0%, {BLUE} 70%, {LIGHT} 100%);
-        color: white; border-radius: 14px; padding: 2rem 2.2rem 1.6rem 2.2rem; margin-bottom: 1.2rem;
-        border-bottom: 6px solid {MINT};
-    }}
-    .banner .tag {{ display:inline-block; background:{MINT}; color:{NAVY} !important; font-weight:700; font-size:0.8rem;
-        letter-spacing:0.06em; text-transform:uppercase; padding:0.25rem 0.7rem; border-radius:999px; }}
-    .banner h1 {{ color: white !important; font-size: 2.1rem; margin: 0.6rem 0 0.4rem 0; line-height:1.2; }}
-    .banner .sub {{ color: #E3ECFD !important; font-size: 1.05rem; margin: 0; }}
-    .banner .by, .banner .by b {{ color: white !important; margin-top: 1rem; font-size: 0.95rem; }}
-    .banner a {{ color: {MINT} !important; text-decoration: none; font-weight: 600; }}
-    .kpis {{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin: 0.2rem 0 1.4rem 0; }}
-    .kpi {{ background:{PALE}; border-radius:12px; padding:1rem 1.1rem; border-left:6px solid {BLUE}; }}
-    .kpi .v {{ font-size:1.8rem; font-weight:800; color:{NAVY} !important; }}
-    .kpi .l {{ font-size:0.85rem; color:#38507F !important; }}
-    .lead {{ font-size: 1.1rem; }}
-    .quote {{ border-left: 5px solid {MINT}; padding: 0.8rem 1.1rem; background: {PALE}; border-radius: 6px; color:{NAVY}; }}
-    .card {{ background:white; border:1px solid #D9E4FB; border-top:5px solid {BLUE}; border-radius:12px;
-        padding:1rem 1.1rem; height:100%; }}
-    .card h4 {{ margin:0 0 0.4rem 0; }}
-    .stTabs [data-baseweb="tab-list"] {{ gap: 0.3rem; flex-wrap: wrap; }}
-    .stTabs [data-baseweb="tab"] {{ background:{PALE}; border-radius:8px 8px 0 0; padding:0.5rem 0.9rem; color:{NAVY} !important; font-weight:600; }}
-    .stTabs [aria-selected="true"] {{ background:{NAVY} !important; }}
-    .stTabs [aria-selected="true"] p {{ color:white !important; }}
-    .stTabs [data-baseweb="tab-highlight"] {{ background:{MINT}; }}
-    .footer {{ text-align:center; color:#5A6E96 !important; font-size:0.85rem; margin-top:1.5rem; }}
-    @media (max-width: 800px) {{ .kpis {{ grid-template-columns: repeat(2, 1fr); }} .banner h1 {{ font-size:1.6rem; }} }}
+    :root { color-scheme: light; }
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] { background:#EEF4FE!important; color:#0B1F4F!important; }
+    [data-testid="stHeader"] { background:transparent!important; }
+    .block-container { max-width:1240px; padding:2.5rem 2.5rem 4rem; }
+    .stApp { font-family:Inter,Arial,sans-serif; }
+    .stApp p,.stApp li,.stApp label,.stApp [data-testid="stCaptionContainer"] { color:#34476A; line-height:1.75; }
+    .stApp h1,.stApp h2,.stApp h3,.stApp h4 { color:#0B1F4F; letter-spacing:-.035em; }
+    .stApp h2 { font-size:1.85rem; padding-top:.5rem; }
+    .stApp h3 { font-size:1.2rem; margin-top:1rem; }
+    .stApp a { color:#1F5FE0; text-underline-offset:4px; }
+    .banner { position:relative; overflow:hidden; background:linear-gradient(115deg,#0B1F4F 15%,#123875 70%,#1F5FE0); border-radius:24px; padding:3rem 3.2rem 2.6rem; margin-bottom:1.4rem; box-shadow:0 16px 40px #0B1F4F14; border:1px solid #ffffff28; }
+    .banner:after { content:""; position:absolute; width:350px; height:350px; border:1px solid #8DB0F230; border-radius:50%; right:-160px; top:-110px; box-shadow:0 0 0 60px #8DB0F20a,0 0 0 120px #8DB0F208; pointer-events:none; }
+    .stApp .banner h1 { position:relative; z-index:1; color:#FFFFFF!important; -webkit-text-fill-color:#FFFFFF!important; font-size:clamp(2rem,3.7vw,3.25rem); line-height:1.12; max-width:850px; margin:.95rem 0 1.1rem; padding:0; font-weight:750; letter-spacing:-.045em; }
+    .stApp .banner .sub { color:#DDE9FF!important; font-size:1.06rem; max-width:720px; line-height:1.6; }
+    .stApp .banner .tag { display:inline-block; color:#5BE38E!important; background:#5BE38E12; border:1px solid #5BE38E55; font-size:.68rem; text-transform:uppercase; letter-spacing:.15em; font-weight:700; padding:.45rem .75rem; border-radius:6px; }
+    .stApp .banner .by,.stApp .banner .by b { color:#FFFFFF!important; font-size:.88rem; line-height:1.8; }
+    .stApp .banner .by { border-top:1px solid #ffffff25; padding-top:1.3rem; margin-top:1.8rem; margin-bottom:0; }
+    .stApp .banner a { color:#5BE38E!important; text-decoration:none; font-weight:600; }
+    .banner a:hover { text-decoration:underline; }
+    .kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-bottom:1.8rem; }
+    .kpi { background:#FFFFFF; border:1px solid #DCE6F7; border-radius:14px; padding:1.3rem 1.4rem; position:relative; }
+    .kpi:before { content:""; display:block; width:25px; height:4px; border-radius:4px; background:#5BE38E; margin-bottom:.75rem; }
+    .kpi .v { color:#0B1F4F; font-weight:750; font-size:1.95rem; letter-spacing:-.045em; line-height:1.15; }
+    .kpi .l { color:#53688B; font-size:.78rem; margin-top:.5rem; }
+    .stTabs [data-baseweb="tab-list"] { gap:5px; flex-wrap:wrap; height:auto; background:transparent; padding:0 0 1.1rem; }
+    .stTabs [data-baseweb="tab"] { background:#FFFFFF; border:1px solid #DCE6F7; border-radius:8px; padding:.6rem .85rem; height:auto; min-height:42px; white-space:normal; }
+    .stTabs [data-baseweb="tab"] p { color:#435779!important; font-size:.77rem; font-weight:600; line-height:1.4; }
+    .stTabs [data-baseweb="tab"][aria-selected="true"] { background:#0B1F4F!important; border-color:#0B1F4F; }
+    .stTabs [data-baseweb="tab"][aria-selected="true"] p { color:#FFFFFF!important; }
+    .stTabs [data-baseweb="tab"]:focus-visible { outline:3px solid #1F5FE0; outline-offset:3px; }
+    .stTabs [data-baseweb="tab-highlight"],.stTabs [data-baseweb="tab-border"] { display:none; }
+    .stTabs [data-baseweb="tab-panel"] { background:#FFFFFF; border:1px solid #DCE6F7; border-radius:18px; padding:1.7rem 2rem 2rem; box-shadow:0 8px 24px #0B1F4F04; }
+    .lead { font-size:1.08rem; max-width:950px; }
+    .card { background:#F5F8FF; border:1px solid #DCE6F7; border-radius:12px; padding:1.3rem; height:100%; color:#34476A; font-size:.93rem; line-height:1.7; }
+    .card h4 { color:#0B1F4F!important; font-size:1rem; margin:0 0 .65rem; padding:0; letter-spacing:-.02em; }
+    .note,.good,.quote { border-radius:10px; padding:1.1rem 1.3rem; margin:1rem 0; line-height:1.75; color:#0B1F4F; background:#EEF4FE; border-left:3px solid #1F5FE0; }
+    .good { background:#EDFBF2; border-color:#5BE38E; }
+    .quote { background:#F4F8FF; border-color:#5BE38E; font-size:1.02rem; }
+    .table-scroll { overflow-x:auto; width:100%; margin:.75rem 0 1.2rem; border:1px solid #DCE6F7; border-radius:12px; }
+    table.t { width:100%; border-collapse:collapse; font-size:.87rem; background:#FFFFFF; color:#34476A; }
+    table.t th { background:#0B1F4F; color:#FFFFFF!important; text-align:left; font-size:.74rem; letter-spacing:.03em; padding:1rem; font-weight:600; }
+    table.t td { border-bottom:1px solid #E5ECF8; padding:1rem; vertical-align:top; line-height:1.65; min-width:110px; }
+    table.t td:first-child { color:#0B1F4F; font-weight:650; }
+    table.t tr:nth-child(even) td { background:#F6F9FF; }
+    table.t tr:last-child td { border-bottom:0; }
+    .stApp [data-testid="stCode"],.stApp pre { background:#EEF4FE!important; border:1px solid #DCE6F7; border-radius:12px; }
+    .stApp pre,.stApp code,.stApp pre span { color:#0B1F4F!important; }
+    .footer { color:#53688B; font-size:.78rem; text-align:center; padding:1.8rem 0 .5rem; }
+    @media(min-width:1600px) { .block-container { padding-top:3rem; } }
+    @media(max-width:850px) { .block-container { padding:1.2rem 1rem 3rem; } .banner { padding:2rem 1.6rem; } .kpis { grid-template-columns:repeat(2,minmax(0,1fr)); } .stTabs [data-baseweb="tab-panel"] { padding:1.2rem; } }
+    @media(max-width:480px) { .kpi { padding:1rem; } .kpi .v { font-size:1.6rem; } .banner h1 { font-size:2rem!important; } }
+    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; } }
     </style>
-    """,
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
 
 def table(df):
-    head = "".join(f"<th>{c}</th>" for c in df.columns)
-    rows = "".join("<tr>" + "".join(f"<td>{v}</td>" for v in r) + "</tr>" for r in df.values.tolist())
-    st.markdown(f'<table class="t"><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>', unsafe_allow_html=True)
+    head = "".join(f"<th>{escape(str(c))}</th>" for c in df.columns)
+    rows = "".join("<tr>" + "".join(f"<td>{escape(str(v))}</td>" for v in r) + "</tr>" for r in df.values.tolist())
+    st.markdown(f'<div class="table-scroll"><table class="t"><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table></div>', unsafe_allow_html=True)
 
 
 def note(text, kind="note"):
@@ -82,11 +93,11 @@ st.markdown(
     <div class="banner">
       <span class="tag">Prepared for the AIOS Talent Team</span>
       <h1>Hiring a Senior Media Buyer for AIOS's European Blitzscale</h1>
-      <p class="sub">A 30-day search plan, and how I would run it alongside three other live searches</p>
+      <p class="sub">A 30-day search plan built on AIOS's hiring bars, and how I would run it alongside three other live searches</p>
       <p class="by"><b>Adam Baig</b> · Talent Lead, Full-Cycle Recruiter &amp; Outbound Headhunter ·
-        <a href="https://www.linkedin.com/in/adambaiguk" target="_blank">LinkedIn</a> ·
-        <a href="https://github.com/SkynetAI-Labs" target="_blank">GitHub</a> ·
-        <a href="https://gitlab.com/SkynetAI-Labs" target="_blank">GitLab</a></p>
+        <a href="https://www.linkedin.com/in/adambaiguk" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
+        <a href="https://github.com/SkynetAI-Labs" target="_blank" rel="noopener noreferrer">GitHub</a> ·
+        <a href="https://gitlab.com/SkynetAI-Labs" target="_blank" rel="noopener noreferrer">GitLab</a></p>
     </div>
     <div class="kpis">
       <div class="kpi"><div class="v">30 days</div><div class="l">Target time-to-fill</div></div>
@@ -98,17 +109,25 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-tabs = st.tabs([
-    "1. Why it matters",
-    "2. Scorecard",
-    "3. Target companies",
-    "4. Sourcing",
-    "5. Outreach",
-    "6. Screening",
-    "7. Closing",
-    "8. KPIs & Europe",
-    "9. Four searches at once",
-])
+SECTIONS = ['Why it matters', 'Scorecard', 'Target companies', 'Sourcing', 'Outreach', 'Screening', 'Closing', 'KPIs & Europe', 'Four searches at once']
+st.markdown(
+    '<div class="nav">' + "".join(
+        f'<a href="#s{i+1}">{i+1:02d} · {name}</a>' for i, name in enumerate(SECTIONS)
+    ) + "</div>",
+    unsafe_allow_html=True,
+)
+
+
+class _Sections:
+    def __getitem__(self, i):
+        st.markdown(
+            f'<div class="sec" id="s{i+1}"><span>SECTION {i+1:02d}</span></div>',
+            unsafe_allow_html=True,
+        )
+        return st.container()
+
+
+tabs = _Sections()
 
 # ---------------------------------------------------------------- 1
 with tabs[0]:
@@ -121,9 +140,9 @@ with tabs[0]:
     )
     a, b = st.columns(2)
     with a:
-        card("Step 1 → $1B ARR by end of 2026", "UK growth from 3k to 200k active GLP-1 patients needs paid acquisition that scales without wasting spend.")
+        card("Step 1 → $1B ARR by end of 2026", "AIOS's stated plan: UK growth from 3k to 200k active GLP-1 patients needs paid acquisition that scales without wasting spend.")
     with b:
-        card("Step 2 → $10B ARR by end of 2028", "Blitzscaling Europe means opening new markets one after another, and each one needs local media buying expertise from day one.")
+        card("Step 2 → $10B ARR by end of 2028", "AIOS's stated ambition: blitzscaling Europe means opening new markets one after another, and each one needs local media buying expertise from day one.")
     st.write("")
     st.markdown(
         '<div class="quote">The goal, in AIOS\'s own words: make sure <b>"a lack of key hires never blocks growth"</b>.</div>',
@@ -354,7 +373,7 @@ with tabs[8]:
     with d2:
         card("Afternoons", "Recruiter screens, interview coordination, references and closing conversations, with scorecard notes written up straight away.")
     with d3:
-        card("Late afternoon to 8pm UK (to midday Pacific)", "Async updates and live syncs with hiring managers across time zones; pipeline reviews and calibration questions raised early.")
+        card("Late afternoon to midday Pacific", "Available through midday Pacific (normally 8pm UK; 7pm during the short daylight-saving changeover periods). Async updates and live syncs with hiring managers across time zones; pipeline reviews and calibration questions raised early.")
     st.write("")
 
     st.subheader("How nothing stalls")
